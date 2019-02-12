@@ -150,7 +150,7 @@ objects:
           - sh
           args:
           - -c
-          - cp -v /etc/rabbitmq/rabbitmq.conf ${RABBITMQ_CONFIG_FILE}; exec docker-entrypoint.sh rabbitmq-server
+          - cp -v /etc/rabbitmq/rabbitmq.conf ${RABBITMQ_CONFIG_FILE}.conf; exec docker-entrypoint.sh rabbitmq-server
           image: ${ISTAG}
           imagePullPolicy: IfNotPresent
           volumeMounts:
@@ -211,7 +211,7 @@ objects:
           - name: RABBITMQ_NODENAME
             value: "rabbit@$(POD_NAME).${CLUSTER_NAME}.$(POD_NAMESPACE).svc.cluster.local"
           - name: RABBITMQ_CONFIG_FILE
-            value: /var/lib/rabbitmq/rabbitmq.conf
+            value: /var/lib/rabbitmq/rabbitmq
         volumes:
         - name: config-volume
           configMap:
