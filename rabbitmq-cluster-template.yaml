@@ -124,6 +124,9 @@ objects:
       - name: amqp
         port: 5672
         targetPort: 5672
+      - name: clustering
+        port: 25672
+        targetPort: 25672
 
 - apiVersion: apps/v1beta1
   kind: StatefulSet
@@ -166,6 +169,9 @@ objects:
             - name: amqp
               protocol: TCP
               containerPort: 5672
+            - name: clustering
+              protocol: TCP
+              containerPort: 25672
           livenessProbe:
             exec:
               command: ["rabbitmqctl", "status"]
