@@ -78,6 +78,7 @@ objects:
         cluster_formation.peer_discovery_backend = rabbit_peer_discovery_k8s
         cluster_formation.k8s.host = kubernetes.default.svc.cluster.local
         cluster_formation.k8s.address_type = hostname
+        cluster_formation.k8s.service_name = ${CLUSTER_NAME}
         cluster_formation.k8s.hostname_suffix = .${CLUSTER_NAME}.${NAMESPACE}.svc.cluster.local
         cluster_formation.node_cleanup.interval = 10
         cluster_formation.node_cleanup.only_log_warning = true
@@ -127,6 +128,20 @@ objects:
       - name: clustering
         port: 25672
         targetPort: 25672
+
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    name: ${CLUSTER_NAME}-internal-access
+  spec:
+    podSelector:
+      matchLabels:
+        app: ${CLUSTER_NAME}
+    ingress:
+    - from:
+      - podSelector:
+          matchLabels:
+            app: ${CLUSTER_NAME}
 
 - apiVersion: apps/v1beta1
   kind: StatefulSet
