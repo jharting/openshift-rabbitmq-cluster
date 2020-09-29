@@ -16,7 +16,7 @@ parameters:
   value: rabbitmq-cluster
 - name: ISTAG
   description: "Image to deploy"
-  value: rabbitmq:3.7-management
+  value: rabbitmq:3.8-management
 - name: RABBITMQ_USER
   description: "Username for the RabbitMQ instance"
   value: rabbitmq
